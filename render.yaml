@@ -7,7 +7,6 @@ services:
     healthCheckPath: /health
     envVars:
       - key: PALMMICRO_PUBLISH_TOKEN
-        generateValue: true
+        sync: false
       - key: PALMMICRO_VIEW_TOKEN
-        generateValue: true
-
+        sync: false
