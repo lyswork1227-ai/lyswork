@@ -2,6 +2,7 @@ services:
   - type: web
     name: palmmicro-live
     runtime: python
+    plan: free
     buildCommand: pip install -r requirements-public.txt
     startCommand: uvicorn public_server:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
