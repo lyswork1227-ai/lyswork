@@ -41,9 +41,9 @@
     }
     .header-inner {
       width: min(100%, 1800px);
-      min-height: 76px;
+      min-height: 60px;
       margin: 0 auto;
-      padding: 0 28px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -51,8 +51,8 @@
     }
     .brand { display: flex; align-items: center; gap: 13px; min-width: 0; }
     .brand-mark {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       display: grid;
       place-items: center;
       flex: 0 0 auto;
@@ -60,23 +60,25 @@
       border-radius: 10px;
       background: linear-gradient(145deg, rgba(15, 159, 110, .16), rgba(15, 159, 110, .04));
       color: var(--green);
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
       box-shadow: inset 0 1px rgba(255, 255, 255, .72);
     }
-    h1 { margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: .01em; }
-    .subtitle { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    h1 { margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: .01em; }
+    .brand-meta { display: flex; align-items: center; gap: 10px; }
+    .subtitle { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+    .promo { margin: 2px 0 0; color: var(--red); font-size: 11px; font-weight: 700; }
     #status {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       flex: 0 0 auto;
-      padding: 8px 12px;
+      padding: 6px 10px;
       border: 1px solid rgba(183, 121, 31, .22);
       border-radius: 999px;
       background: rgba(183, 121, 31, .08);
       color: var(--amber);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 650;
     }
     #status::before {
@@ -102,39 +104,39 @@
     main {
       width: min(100%, 1800px);
       margin: 0 auto;
-      padding: 28px 28px 48px;
+      padding: 16px 24px 28px;
     }
     .overview {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 18px;
+      gap: 18px;
+      margin-bottom: 10px;
     }
     .overview h2 {
-      margin: 0 0 6px;
-      font-size: 16px;
+      margin: 0 0 4px;
+      font-size: 15px;
       font-weight: 650;
       letter-spacing: .01em;
     }
-    .overview p { margin: 0; color: var(--muted); font-size: 13px; }
-    .meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .overview p { margin: 0; color: var(--muted); font-size: 12px; }
+    .meta { display: flex; gap: 8px; flex-wrap: wrap; }
     .meta span {
-      min-height: 38px;
+      min-height: 32px;
       display: inline-flex;
       align-items: center;
-      padding: 0 13px;
+      padding: 0 10px;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: rgba(255, 255, 255, .88);
       color: #475569;
-      font-size: 12px;
+      font-size: 11px;
       font-variant-numeric: tabular-nums;
     }
     .table-shell {
       overflow: hidden;
       border: 1px solid var(--line-strong);
-      border-radius: 14px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, .94);
       box-shadow: 0 18px 48px rgba(30, 64, 90, .10), inset 0 1px rgba(255, 255, 255, .85);
     }
@@ -147,8 +149,8 @@
       table-layout: auto;
     }
     th, td {
-      height: 52px;
-      padding: 0 16px;
+      height: 42px;
+      padding: 0 14px;
       border-bottom: 1px solid var(--line);
       text-align: left;
       white-space: nowrap;
@@ -157,7 +159,7 @@
       position: sticky;
       top: 0;
       z-index: 2;
-      height: 46px;
+      height: 36px;
       background: #edf7f2;
       color: #547064;
       font-size: 12px;
@@ -171,8 +173,8 @@
       font-variant-numeric: tabular-nums;
       transition: background-color .15s ease, color .15s ease;
     }
-    th:first-child, td:first-child { padding-left: 19px; }
-    th:last-child, td:last-child { width: 100%; min-width: 360px; padding-right: 20px; }
+    th:first-child, td:first-child { padding-left: 14px; }
+    th:last-child, td:last-child { width: 100%; min-width: 360px; padding-right: 14px; }
     tbody tr:last-child td { border-bottom: 0; }
     tbody tr:hover td { background: #f2faf6; }
     tbody tr.group-start:not(:first-child) td { border-top: 1px solid rgba(30, 64, 90, .15); }
@@ -221,17 +223,17 @@
     }
     button:hover { filter: brightness(1.06); }
     @media (max-width: 720px) {
-      .header-inner { min-height: 68px; padding: 0 16px; }
-      .brand-mark { width: 31px; height: 31px; }
-      h1 { font-size: 17px; }
+      .header-inner { min-height: 56px; padding: 0 14px; }
+      .brand-mark { width: 28px; height: 28px; }
+      h1 { font-size: 16px; }
       .subtitle { display: none; }
-      #status { padding: 7px 10px; font-size: 12px; }
-      main { padding: 20px 14px 32px; }
-      .overview { align-items: flex-start; flex-direction: column; gap: 14px; }
+      #status { padding: 6px 9px; font-size: 11px; }
+      main { padding: 14px 12px 24px; }
+      .overview { align-items: flex-start; flex-direction: column; gap: 10px; }
       .meta { width: 100%; }
       .meta span { flex: 1 1 auto; justify-content: center; }
-      .table-shell { border-radius: 12px; }
-      th, td { height: 48px; padding: 0 13px; }
+      .table-shell { border-radius: 10px; }
+      th, td { height: 40px; padding: 0 10px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
@@ -245,7 +247,10 @@
         <div class="brand-mark" aria-hidden="true">P</div>
         <div>
           <h1>Palmmicro 实时数据</h1>
-          <p class="subtitle">跨市场对冲监控</p>
+          <div class="brand-meta">
+            <p class="subtitle">跨市场对冲监控</p>
+            <p class="promo">跟着无敌哥学套利，年入百万不是梦</p>
+          </div>
         </div>
       </div>
       <div id="status" role="status" aria-live="polite">等待连接</div>
