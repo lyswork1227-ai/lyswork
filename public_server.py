@@ -23,7 +23,7 @@ if not INDEX_HTML.exists():
 app = FastAPI(title='Palmmicro Live', docs_url=None, redoc_url=None)
 latest_snapshot: Optional[str] = None
 viewers: set[WebSocket] = set()
-publisher_connected = False
+publishers: set[WebSocket] = set()
 
 
 def _token_matches(received: object, expected: str) -> bool:
@@ -62,6 +62,13 @@ async def _broadcast(payload: str):
 		viewers.discard(viewer)
 
 
+def _publisher_status_payload() -> str:
+	return json.dumps({
+		'type': 'publisher_status',
+		'connected': bool(publishers),
+	}, separators=(',', ':'))
+
+
 @app.get('/')
 async def index():
 	return HTMLResponse(INDEX_HTML.read_text(encoding='utf-8'))
@@ -71,7 +78,7 @@ async def index():
 async def health():
 	return JSONResponse({
 		'ok': True,
-		'publisher_connected': publisher_connected,
+		'publisher_connected': bool(publishers),
 		'viewer_count': len(viewers),
 		'has_snapshot': latest_snapshot is not None,
 	})
@@ -79,12 +86,13 @@ async def health():
 
 @app.websocket('/ws/publish')
 async def publish_socket(websocket: WebSocket):
-	global latest_snapshot, publisher_connected
+	global latest_snapshot
 	await websocket.accept()
 	if not await _authenticate(websocket, 'publisher', PUBLISH_TOKEN):
 		return
 
-	publisher_connected = True
+	publishers.add(websocket)
+	await _broadcast(_publisher_status_payload())
 	try:
 		while True:
 			payload = await websocket.receive_text()
@@ -99,8 +107,8 @@ async def publish_socket(websocket: WebSocket):
 	except (WebSocketDisconnect, json.JSONDecodeError):
 		pass
 	finally:
-		publisher_connected = False
-		await _broadcast(json.dumps({'type': 'publisher_status', 'connected': False}))
+		publishers.discard(websocket)
+		await _broadcast(_publisher_status_payload())
 
 
 @app.websocket('/ws/view')
@@ -112,6 +120,7 @@ async def view_socket(websocket: WebSocket):
 	viewers.add(websocket)
 	if latest_snapshot is not None:
 		await websocket.send_text(latest_snapshot)
+	await websocket.send_text(_publisher_status_payload())
 	try:
 		while True:
 			message = await websocket.receive_text()

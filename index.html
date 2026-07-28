@@ -297,6 +297,7 @@
     let socket;
     let retry = 1000;
     let heartbeat;
+    let publisherConnected = false;
 
     function setStatus(text, live = false) {
       statusEl.textContent = text;
@@ -335,6 +336,8 @@
       }).join('') : `<tr><td class="empty" colspan="${Math.max(columns.length, 1)}">暂无实时数据</td></tr>`;
       updatedEl.textContent = `更新时间 ${new Date(message.sent_at).toLocaleString()}`;
       countEl.textContent = `${rows.length} 行`;
+      publisherConnected = true;
+      setStatus('实时连接', true);
     }
 
     function escapeHtml(value) {
@@ -352,13 +355,17 @@
         const message = JSON.parse(event.data);
         if (message.type === 'ready') {
           retry = 1000;
-          setStatus('实时连接', true);
+          setStatus('公网已连接，等待内网数据源');
           clearInterval(heartbeat);
           heartbeat = setInterval(() => socket.readyState === WebSocket.OPEN && socket.send('ping'), 20000);
         } else if (message.type === 'snapshot') {
           render(message);
-        } else if (message.type === 'publisher_status' && !message.connected) {
-          setStatus('内网数据源已断开');
+        } else if (message.type === 'publisher_status') {
+          publisherConnected = Boolean(message.connected);
+          setStatus(
+            publisherConnected ? '内网数据源已连接，等待数据' : '内网数据源已断开',
+            publisherConnected
+          );
         } else if (message.type === 'error') {
           sessionStorage.removeItem('palmmicro_view_token');
           socket.close();
